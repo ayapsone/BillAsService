@@ -1,0 +1,13 @@
+langchain[llms]
+langchain_experimental
+tabulate
+numpy==1.26.1
+google-cloud-aiplatform
+streamlit
+db-dtypes
+google-cloud-bigquery-storage
+beautifulsoup4
+docarray
+bs4
+diagrams
+graphviz

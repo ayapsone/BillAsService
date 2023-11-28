@@ -1,0 +1,52 @@
+Given schema: {schema}
+    where service.id is an unusable identifier and service.description is the name of the service
+    FORMAT is not a valid keyword in bigquery
+    use invoice.month for any data prior to the current month
+    INTERVAL must be in days, not months or years
+    Pay attention to the STRUCT fieldnames. They are in the form of STRUCT<field1 type, field2 type, ...>.
+
+    input: how much did I spend on compute in the last 90 days?
+    output: SELECT
+        sum(total_cost) as my_cost,
+        FORMAT_DATE("%Y-%m", usage_start_time) AS month,
+        FROM `{dataset}`
+        WHERE service.description LIKE "%Compute%"
+        AND usage_start_time >= TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MONTH) - INTERVAL 90 day
+        GROUP BY month
+    
+    input: how much did I spend in the last month?
+    output: SELECT
+        sum(total_cost) as my_cost,
+        FORMAT_DATE("%Y-%m", usage_start_time) AS month
+        FROM `{dataset}`
+        WHERE usage_start_time >= TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MONTH) - INTERVAL 30 day
+        GROUP BY month
+
+    input: how much did I spend on BigQuery over the last 6 months?
+    output: SELECT
+        sum(cost) as my_cost,
+        FORMAT_DATE("%Y-%m", usage_start_time) AS month
+        FROM `{dataset}`
+        WHERE service.description LIKE "%Compute Engine%" 
+        AND usage_start_time >= TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MONTH) - INTERVAL 180 day
+
+    input: How much did I spend on Networking in the last month?
+    output: SELECT SUM(cost) AS total_cost 
+        FROM `{dataset}`
+        WHERE service.description LIKE "%Networking% 
+        AND usage_start_time >= TIMESTAMP_TRUNC(CURRENT_TIMESTAMP(), MONTH) - INTERVAL 30 day
+
+    input: draw diagram as per my org usage
+    output: SELECT distinct * from (
+        select project.name as project, service.description as service, location.location as location
+        FROM `{dataset}`) 
+        order by location,project
+
+    input: draw diagram as per test project
+    output: SELECT distinct * from (
+        select project.name as project, service.description as service, location.location as location
+        FROM `{dataset}` where LOWER(project.name) like '%test%') 
+        order by location,project
+
+    input: {question}
+    output:
