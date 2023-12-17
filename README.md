@@ -33,4 +33,12 @@ This Streamlit app utilizes Vertex AI and BigQuery to answer customer questions 
 * The app provides a basic interface for interacting with the models and visualizing data. You can extend it further to include additional features and functionalities.
 
 
+**Demo**
+<video src="[https://github.com/ayapsone/BillChat/blob/main/billchat.mp4](https://github.com/ayapsone/BillChat/assets/25380949/364ac25f-b203-4600-9071-888cb3d9ef4c
+)" >
+</video>
+
+
+
+https://github.com/ayapsone/BillChat/assets/25380949/364ac25f-b203-4600-9071-888cb3d9ef4c
 
